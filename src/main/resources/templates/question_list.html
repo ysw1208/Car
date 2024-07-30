@@ -20,7 +20,7 @@
 			<div class="w-full md:w-1/2">
 				<div class="flex">
 					<input type="text" id="search_kw" class="form-input flex-1 border-gray-300 rounded-l-md"
-						placeholder="검색어 입력" value="${kw}">
+						placeholder="검색어 입력" value="">
 					<button
 						class="bg-gray-200 text-gray-700 px-4 py-2 rounded-r-md border-l border-gray-300 hover:bg-gray-300"
 						type="button" id="btn_search">찾기</button>
@@ -76,8 +76,8 @@
 
 		<!-- 숨겨진 폼 -->
 		<form action="/question/list" method="get" id="searchForm">
-			<input type="hidden" id="kw" name="kw" th:value="${kw}">
-			<input type="hidden" id="page" name="page" th:value="${paging.number}">
+			<input type="hidden" id="kw" name="kw" value="">
+			<input type="hidden" id="page" name="page" value="${paging.number}">
 		</form>
 	</div>
 
