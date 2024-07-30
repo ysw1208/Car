@@ -1,20 +1,37 @@
-<html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-3">
-    <form th:action="@{/user/login}" method="post">
-        <div th:if="${param.error}">
-            <div class="alert alert-danger">
-                사용자ID 또는 비밀번호를 확인해 주세요.
-            </div>
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Tailwind CSS -->
+    <link href="/css/output.css" rel="stylesheet">
+    <title>로그인</title>
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-6">
+        <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+            <form th:action="@{/user/login}" method="post">
+                <div th:if="${param.error}">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">사용자ID 또는 비밀번호를 확인해 주세요.</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">사용자ID</label>
+                    <input type="text" name="username" id="username" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">비밀번호</label>
+                    <input type="password" name="password" id="password" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 focus:outline-none focus:shadow-outline">로그인</button>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="username" class="form-label">사용자ID</label>
-            <input type="text" name="username" id="username" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="password" name="password" id="password" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">로그인</button>
-    </form>
-</div>
+    </div>
+</body>
+
 </html>

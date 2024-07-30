@@ -1,29 +1,40 @@
+<!DOCTYPE html>
 <html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-3">
-    <div class="my-3 border-bottom">
-        <div>
-            <h4>회원가입</h4>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>회원가입</title>
+</head>
+
+<body class="bg-gray-100">
+    <div layout:fragment="content" class="container mx-auto px-4 py-6">
+        <div class="border-b pb-4 mb-6">
+            <h4 class="text-2xl font-bold">회원가입</h4>
         </div>
+        <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" class="bg-white p-6 rounded-lg shadow-md">
+            <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+            <div class="mb-4">
+                <label for="username" class="block text-gray-700 text-sm font-bold mb-2">사용자ID</label>
+                <input type="text" th:field="*{username}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="password1" class="block text-gray-700 text-sm font-bold mb-2">비밀번호</label>
+                <input type="password" th:field="*{password1}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="password2" class="block text-gray-700 text-sm font-bold mb-2">비밀번호 확인</label>
+                <input type="password" th:field="*{password2}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">이메일</label>
+                <input type="email" th:field="*{email}" class="form-input w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500">
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 focus:outline-none focus:shadow-outline">회원가입</button>
+        </form>
     </div>
-    <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
-        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-        <div class="mb-3">
-            <label for="username" class="form-label">사용자ID</label>
-            <input type="text" th:field="*{username}" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="password1" class="form-label">비밀번호</label>
-            <input type="password" th:field="*{password1}" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="password2" class="form-label">비밀번호 확인</label>
-            <input type="password" th:field="*{password2}" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" th:field="*{email}" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">회원가입</button>
-    </form>
-</div>
+</body>
+
 </html>

@@ -40,7 +40,9 @@ dependencies {
     implementation 'org.commonmark:commonmark:0.21.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     runtimeOnly 'org.postgresql:postgresql'
-
+ 	implementation 'mysql:mysql-connector-java:8.0.30'
+ 	runtimeOnly 'com.mysql:mysql-connector-j'
+  	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 tasks.named('test') {
