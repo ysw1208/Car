@@ -1,112 +1,104 @@
-<!doctype html>
-<html lang="ko">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Tailwind CSS -->
-	<link href="/css/output.css" rel="stylesheet">
-	<title>질문 목록</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS -->
+    <link href="/css/output.css" rel="stylesheet">
+    <title>질문 목록</title>
 </head>
 
 <body class="bg-gray-100">
-	<div class="container mx-auto px-4 py-6">
-		<!-- 질문 등록 및 검색 -->
-		<div class="flex flex-wrap mb-6">
-			<div class="w-full md:w-1/2 mb-4 md:mb-0">
-				<a href="/question/create" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">질문
-					등록하기</a>
-			</div>
-			<div class="w-full md:w-1/2">
-				<div class="flex">
-					<input type="text" id="search_kw" class="form-input flex-1 border-gray-300 rounded-l-md"
-						placeholder="검색어 입력" value="">
-					<button
-						class="bg-gray-200 text-gray-700 px-4 py-2 rounded-r-md border-l border-gray-300 hover:bg-gray-300"
-						type="button" id="btn_search">찾기</button>
-				</div>
-			</div>
-		</div>
+    <!-- 네비게이션 바 포함 -->
+    <div th:replace="navbar :: navbarFragment"></div>
 
-		<!-- 질문 목록 테이블 -->
-		<table class="min-w-full bg-white shadow rounded-md overflow-hidden">
-			<thead class="bg-gray-800 text-white">
-				<tr>
-					<th class="py-2 px-4 border-b text-center">번호</th>
-					<th class="py-2 px-4 border-b" style="width:50%">제목</th>
-					<th class="py-2 px-4 border-b">글쓴이</th>
-					<th class="py-2 px-4 border-b">작성일시</th>
-					<th class="py-2 px-4 border-b">조회 수</th>
-				</tr>
-			</thead>
-			<tbody>
-			    <tr th:each="question, loop : ${paging}" class="hover:bg-gray-100">
-			        <td class="py-2 px-4 border-b text-center" th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
-			        <td class="py-2 px-4 border-b">
-			            <a th:href="@{/question/detail/{id}(id=${question.id})}" class="text-blue-600 hover:underline" th:text="${question.subject}"></a>
-			            <span class="text-red-500 text-sm ml-2" th:if="${#lists.size(question.answerList) > 0}" th:text="${#lists.size(question.answerList)}"></span>
-			        </td>
-			        <td class="py-2 px-4 border-b" th:if="${question.author != null}" th:text="${question.author.username}"></td>
-			        <td class="py-2 px-4 border-b" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-			        <td class="py-2 px-4 border-b" th:text="${question.view}"></td>
-			    </tr>
-			</tbody>
+    <div layout:fragment="content" class="container mx-auto px-4 py-6">
+        <!-- 질문 등록 및 검색 -->
+        <div class="flex justify-between items-center mb-6">
+            <a href="/question/create" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">질문 등록하기</a>
+            <div class="flex items-center">
+                <input type="text" id="search_kw" class="form-input border-gray-300 rounded-l-md" placeholder="검색어 입력">
+                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-r-md border-l border-gray-300 hover:bg-gray-300" type="button" id="btn_search">찾기</button>
+            </div>
+        </div>
 
-		</table>
+        <!-- 질문 목록 테이블 -->
+        <table class="min-w-full bg-white shadow rounded-md overflow-hidden">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="py-2 px-4 border-b text-center">번호</th>
+                    <th class="py-2 px-4 border-b" style="width:50%">제목</th>
+                    <th class="py-2 px-4 border-b">글쓴이</th>
+                    <th class="py-2 px-4 border-b">작성일시</th>
+                    <th class="py-2 px-4 border-b">조회 수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="question, loop : ${paging}" class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b text-center" th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+                    <td class="py-2 px-4 border-b">
+                        <a th:href="@{/question/detail/{id}(id=${question.id})}" class="text-blue-600 hover:underline" th:text="${question.subject}"></a>
+                        <span class="text-red-500 text-sm ml-2" th:if="${#lists.size(question.answerList) > 0}" th:text="${#lists.size(question.answerList)}"></span>
+                    </td>
+                    <td class="py-2 px-4 border-b" th:if="${question.author != null}" th:text="${question.author.username}"></td>
+                    <td class="py-2 px-4 border-b" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td class="py-2 px-4 border-b" th:text="${question.view}"></td>
+                </tr>
+            </tbody>
+        </table>
 
-		<!-- 페이징 처리 -->
-		<div class="mt-6">
-			<ul class="flex justify-center space-x-2">
-				<li th:classappend="${!paging.hasPrevious} ? 'opacity-50 cursor-not-allowed'" class="page-item">
-					<a href="javascript:void(0)" class="page-link py-2 px-4 border rounded-md"
-						th:data-page="${paging.number-1}">이전</a>
-				</li>
-				<li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-					th:if="${page >= paging.number-5 and page <= paging.number+5}"
-					th:classappend="${page == paging.number} ? 'bg-blue-600 text-white'" class="page-item">
-					<a href="javascript:void(0)" class="page-link py-2 px-4 border rounded-md" th:text="${page}"
-						th:data-page="${page}"></a>
-				</li>
-				<li th:classappend="${!paging.hasNext} ? 'opacity-50 cursor-not-allowed'" class="page-item">
-					<a href="javascript:void(0)" class="page-link py-2 px-4 border rounded-md"
-						th:data-page="${paging.number+1}">다음</a>
-				</li>
-			</ul>
-		</div>
+        <!-- 페이징 처리 -->
+        <div class="mt-6">
+            <ul class="flex justify-center space-x-2">
+                <li th:classappend="${!paging.hasPrevious} ? 'opacity-50 cursor-not-allowed'" class="page-item">
+                    <a href="javascript:void(0)" class="page-link py-2 px-4 border rounded-md" th:data-page="${paging.number-1}">이전</a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                    th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                    th:classappend="${page == paging.number} ? 'bg-blue-600 text-white'" class="page-item">
+                    <a href="javascript:void(0)" class="page-link py-2 px-4 border rounded-md" th:text="${page}"
+                        th:data-page="${page}"></a>
+                </li>
+                <li th:classappend="${!paging.hasNext} ? 'opacity-50 cursor-not-allowed'" class="page-item">
+                    <a href="javascript:void(0)" class="page-link py-2 px-4 border rounded-md" th:data-page="${paging.number+1}">다음</a>
+                </li>
+            </ul>
+        </div>
 
-		<!-- 숨겨진 폼 -->
-		<form action="/question/list" method="get" id="searchForm">
-			<input type="hidden" id="kw" name="kw" value="">
-			<input type="hidden" id="page" name="page" value="${paging.number}">
-		</form>
-	</div>
+        <!-- 숨겨진 폼 -->
+        <form action="/question/list" method="get" id="searchForm">
+            <input type="hidden" id="kw" name="kw" value="">
+            <input type="hidden" id="page" name="page" value="${paging.number}">
+        </form>
+    </div>
 
-	<script>
-		const pageElements = document.getElementsByClassName("page-link");
-		Array.from(pageElements).forEach(function (element) {
-			element.addEventListener('click', function () {
-				document.getElementById('page').value = this.dataset.page;
-				document.getElementById('searchForm').submit();
-			});
-		});
+    <script>
+        const pageElements = document.getElementsByClassName("page-link");
+        Array.from(pageElements).forEach(function (element) {
+            element.addEventListener('click', function () {
+                document.getElementById('page').value = this.dataset.page;
+                document.getElementById('searchForm').submit();
+            });
+        });
 
-		const btnSearch = document.getElementById("btn_search");
-		btnSearch.addEventListener('click', function () {
-			document.getElementById('kw').value = document.getElementById('search_kw').value;
-			document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
-			document.getElementById('searchForm').submit();
-		});
+        const btnSearch = document.getElementById("btn_search");
+        btnSearch.addEventListener('click', function () {
+            document.getElementById('kw').value = document.getElementById('search_kw').value;
+            document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+            document.getElementById('searchForm').submit();
+        });
 
-		// 엔터키로 검색 기능 추가
-		document.getElementById("search_kw").addEventListener("keypress", function (event) {
-			if (event.keyCode === 13) { // 엔터키를 눌렀을 때
-				event.preventDefault(); // 기본 이벤트를 막습니다 (폼 제출 방지)
-				document.getElementById('kw').value = this.value;
-				document.getElementById('page').value = 0;  // 엔터키로 검색 시 첫 페이지부터 조회
-				document.getElementById('searchForm').submit();
-			}
-		});
-	</script>
+        // 엔터키로 검색 기능 추가
+        document.getElementById("search_kw").addEventListener("keypress", function (event) {
+            if (event.keyCode === 13) { // 엔터키를 눌렀을 때
+                event.preventDefault(); // 기본 이벤트를 막습니다 (폼 제출 방지)
+                document.getElementById('kw').value = this.value;
+                document.getElementById('page').value = 0;  // 엔터키로 검색 시 첫 페이지부터 조회
+                document.getElementById('searchForm').submit();
+            }
+        });
+    </script>
 
 </body>
 

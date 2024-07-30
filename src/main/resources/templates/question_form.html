@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,9 @@
 </head>
 
 <body class="bg-gray-100">
+    <!-- 네비게이션 바 포함 -->
+    <div th:replace="navbar :: navbarFragment"></div>
+
     <div layout:fragment="content" class="container mx-auto px-4 py-6">
         <h5 class="my-3 border-b pb-2 text-xl font-semibold">질문등록</h5>
         <form th:object="${questionForm}" method="post">
