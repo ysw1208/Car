@@ -1,30 +1,45 @@
-<nav th:fragment="navbarFragment" class="bg-white border-b border-gray-200">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a class="text-xl font-bold text-gray-800" href="/">SBB</a>
-        <button class="text-gray-500 focus:outline-none lg:hidden" id="navbar-toggle">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-            </svg>
-        </button>
-        <div class="hidden lg:flex lg:items-center w-full lg:w-auto" id="navbar-menu">
-            <ul class="flex flex-col lg:flex-row lg:space-x-4">
-                <li class="nav-item">
-                    <a class="nav-link text-gray-700 hover:text-gray-900" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-                    <a class="nav-link text-gray-700 hover:text-gray-900" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-gray-700 hover:text-gray-900" th:href="@{/user/signup}">회원가입</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-gray-700 hover:text-gray-900" th:href="@{/user/profile}" sec:authorize="isAuthenticated()">마이페이지</a>
-                </li>
-            </ul>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>마이페이지</title>
+</head>
+
+<body class="bg-gray-100">
+    <nav th:fragment="navbarFragment" class="bg-white shadow-md border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a class="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300" href="/">SBB</a>
+            <button class="text-gray-500 focus:outline-none lg:hidden" id="navbar-toggle">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <div class="hidden lg:flex lg:items-center w-full lg:w-auto" id="navbar-menu">
+                <ul class="flex flex-col lg:flex-row lg:space-x-6 mt-4 lg:mt-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-gray-700 hover:text-blue-500 transition-colors duration-300" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+                        <a class="nav-link text-gray-700 hover:text-blue-500 transition-colors duration-300" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-gray-700 hover:text-blue-500 transition-colors duration-300" th:href="@{/user/signup}">회원가입</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-gray-700 hover:text-blue-500 transition-colors duration-300" th:href="@{/user/profile}" sec:authorize="isAuthenticated()">마이페이지</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <script>
-        document.getElementById('navbar-toggle').addEventListener('click', function () {
-            var menu = document.getElementById('navbar-menu');
-            menu.classList.toggle('hidden');
-        });
-    </script>
-</nav>
+        <script>
+            document.getElementById('navbar-toggle').addEventListener('click', function () {
+                var menu = document.getElementById('navbar-menu');
+                menu.classList.toggle('hidden');
+            });
+        </script>
+    </nav>
+</body>
+
+</html>
